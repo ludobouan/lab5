@@ -11,14 +11,19 @@ def intersect(A,B,C,D):
     return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
 
 def in_collision(q, obstacle_segs):
-    # using the function intersect(point a, b, c, d) to find out whether there is collision in line [a, b] and [c,d] it 
+    # using the function intersect(point a, b, c, d) to find out whether there is collision in line [a, b] and [c,d] it
     # intersect() returns true it there are line segments
     arm_segments = [( (0,0), fk1(q) ), ( fk1(q), fk(q))]
     # arm_segments are the points of the two-link manipultor
     ## return True if there are segments from arm_segments and segments from obstacle_segs intersect
-    
+
+    for arm in arm_segments:
+        for obs in obstacle_segs:
+            return True if intersect(arm[0], arm[1], obs[0], obs[1])
+
+
 if __name__=="__main__":
-    
+
     obstacle_segs = [ [[0.0,0.0], [0.0,0.4]] ]  # line segs ((x1,z1)--(x2,z2))
     print in_collision( [0,0], obstacle_segs)                       # False
     print in_collision( [np.pi /4, -np.pi *3/4], obstacle_segs)     # True
