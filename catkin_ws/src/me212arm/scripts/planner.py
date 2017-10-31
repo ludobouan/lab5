@@ -34,18 +34,23 @@ def ik(target_TCP_xz, q0):
 
 
     # candidate 1
-    q_2= 2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
-    q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+    try:
+        q_2= 2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
+        q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
 
-    if not np.isnan([q_1, q_2]).any():
-        ik_candidate.append([q_1, q_2])
-
+        if not np.isnan([q_1, q_2]).any():
+            ik_candidate.append([q_1, q_2])
+    except:
+        print("math error on candidate 1")
     # candidate 2
-    q_2= -1*q_2
-    q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+    try:
+        q_2= -2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
+        q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
 
-    if not np.isnan([q_1, q_2]).any():
-        ik_candidate.append([q_1, q_2])
+        if not np.isnan([q_1, q_2]).any():
+            ik_candidate.append([q_1, q_2])
+    except:
+        print("math error on candidate 2")
 
     return select_best_q(ik_candidate, q0)
 
