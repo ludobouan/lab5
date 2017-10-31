@@ -19,7 +19,7 @@ def in_collision(q, obstacle_segs):
 
     for arm in arm_segments:
         for obs in obstacle_segs:
-            return True if intersect(arm[0], arm[1], obs[0], obs[1])
+            return intersect(arm[0], arm[1], obs[0], obs[1])
 
 
 if __name__=="__main__":
