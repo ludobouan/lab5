@@ -42,7 +42,7 @@ def ik(target_TCP_xz, q0):
 
     # candidate 2
     q_2= -1*q_2
-    # q_1=???
+    q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
 
     if not np.isnan([q_1, q_2]).any():
         ik_candidate.append([q_1, q_2])
