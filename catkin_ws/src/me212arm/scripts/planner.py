@@ -31,12 +31,16 @@ def ik(target_TCP_xz, q0):
 
     # calculate q_1 and q_2 using trigonometry
     # known parameters a1: link 1's length, a2: link 2's length, (x,z): the coordinates for the target point
-
+    xz2 = x**2 + z**2
+    aplus = a1+a2
+    amin = a1-a2
 
     # candidate 1
     try:
-        q_2= 2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
-        q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+        # q_2= 2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
+        # q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+        q_2 = 2* np.arctan(np.sqrt((aplus**2 - xz2)/(xz2 - amin**2)))
+        q_1 = np.arctan(z/x) - np.arctan((a2*np.sin(q_2)) / (a1+a2*np.cos(q_2))) - np.pi/2
 
         if not np.isnan([q_1, q_2]).any():
             ik_candidate.append([q_1, q_2])
@@ -44,8 +48,10 @@ def ik(target_TCP_xz, q0):
         print("math error on candidate 1")
     # candidate 2
     try:
-        q_2= -2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
-        q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+        # q_2= -2*np.arctan(np.sqrt(((a1+a2)**2-(x**2+z**2))/((x**2+z**2)-(a1-a2)**2)))
+        # q_1= np.arctan2(z,x) - np.arctan2(a2*np.sin(q_2), a1+a2*np.cos(q_2)) - np.pi/2
+        q_2 = -2* np.arctan(np.sqrt((aplus**2 - xz2)/(xz2 - amin**2)))
+        q_1 = np.arctan(z/x) - np.arctan((a2*np.sin(q_2)) / (a1+a2*np.cos(q_2))) - np.pi/2
 
         if not np.isnan([q_1, q_2]).any():
             ik_candidate.append([q_1, q_2])
